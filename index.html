@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+    }
+
+    .cuelpo {
+        display: flex;
+        justify-content: center;
+        height: 100vh;
+        align-items: center;
+        background-image: url(https://i.pinimg.com/736x/92/1c/1b/921c1b8642922c11533e99d87e3a5c54.jpg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+
+    .registro {
+        width: 40%;
+        height: 40vh;
+        display: flex;
+        flex-direction: column;
+        border-radius: 10px;
+        align-items: center;
+    }
+
+    .datos {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        row-gap: 4px;
+
+    }
+
+    .Alerta {
+        background-image: url("https://i.pinimg.com/736x/a7/9d/31/a79d3185734f513323eacadd1616e41f.jpg");
+        background-size: cover;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        width: 30vh;
+        height: 30vh;
+        text-align: center;
+    }
+</style>
+
+<body>
+    <div class="cuelpo">
+        <div class="registro">
+            <div class="datos">
+                <h2 id="inicio"></h2>
+                <input type="text" placeholder="ingrese su nombre" id="nombre">
+                <input type="tex" placeholder="ingrese sus apellidos" id="apellido">
+                <input type="number" placeholder="ingrese su numero de telefono" id="telefono">
+                <select id="DocIdentidad">
+                    <option value="CC">Cedula de ciudadania</option>
+                    <option value="CE">Cedula de extranjeria</option>
+                    <option value="TI">Tarjeta de identidad</option>
+                </select>
+                <input type="number" placeholder="Numero de documento" ; id="Doc">
+                <input type="email" placeholder="Email" id="Email">
+                <input type="date" id="fecha" ;>
+                <div>
+                    <label>masculino<input type="radio" name="pepe" id="1" placeholder="xd"></label>
+                    <label>femenino<input type="radio" name="pepe" id="2" placeholder="xd"></label>
+                </div>
+                <button onclick="validar()">enviar</button>
+            </div>
+            <div class="Alerta">
+                <p id="alerta"> </p>
+            </div>
+
+        </div>
+
+    </div>
+    <script>
+        const inicio = "Registro";
+        let AlertaContenido = "";
+        document.getElementById("inicio").innerHTML = inicio
+        let datos = {};
+        let datos1 = [];
+      
+        function validar() {
+            let llave = true;
+            datos = {
+                Nombre: document.getElementById("nombre").value,
+                Apellido: document.getElementById("apellido").value,
+                Email: document.getElementById("Email").value,
+                Telefono: document.getElementById("telefono").value,
+                TipoDocumento: document.getElementById("DocIdentidad").value,
+                NumeroDocumento: document.getElementById("Doc").value,
+                Fecha: document.getElementById("fecha").value
+            }
+            datos1.unshift(datos)
+            console.log(datos1)
+            for (let key in datos) {
+               
+                let elemento = datos[key];
+                let nan = parseInt(elemento);
+                if (elemento.length == 0) {
+                    AlertaContenido = `no se permiten espacios vacios en ${key}`;
+                    document.getElementById("alerta").innerHTML = AlertaContenido
+                    llave = false;
+                } 
+                if (elemento.length > 10 && key != 'Email') {
+                    AlertaContenido = `no se permiten mas de 10 caracteres en ${key}`;
+                    document.getElementById("alerta").innerHTML = AlertaContenido
+                    llave = false;
+                } 
+                 if (isNaN(nan) == false && (key == "Nombre" || key == "Apellido")) {
+                    console.log(isNaN(nan))
+                    AlertaContenido = `no se permiten numeros en ${key}`;
+                    document.getElementById("alerta").innerHTML = AlertaContenido
+                    llave = false;
+                }
+            }
+            if (llave) {
+                    AlertaContenido = `registro exitoso`;
+                    console.log("ya esta hecho")
+                    document.getElementById("alerta").innerHTML = AlertaContenido
+                }
+           
+                
+        }
+    </script>
+
+</body>
+
+</html>
