@@ -13,16 +13,14 @@
         box-sizing: border-box;
     }
 
-    .cuelpo {
+    #cuelpo {
         display: flex;
         justify-content: center;
+        width: 100%;
         height: 100vh;
         align-items: center;
-        background-image: url(https://i.pinimg.com/736x/92/1c/1b/921c1b8642922c11533e99d87e3a5c54.jpg);
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: cover;
-        position: relative;
+        position: absolute;
+        top: 0px;
         z-index: 20;
     }
 
@@ -34,6 +32,7 @@
         border-radius: 10px;
         align-items: center;
         position: relative;
+        z-index: 10;
     }
 
     .datos {
@@ -55,10 +54,25 @@
         text-align: center;
         z-index: 10;
     }
+
+    .cuelpote {
+        height: 100vh;
+        background-image: url(https://i.pinimg.com/736x/92/1c/1b/921c1b8642922c11533e99d87e3a5c54.jpg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        position: relative;
+        z-index: 30;
+    }
 </style>
 
 <body>
-    <div class="cuelpo">
+
+    <div class="cuelpote">
+    </div>
+    <button onclick="Tabla()">oña</button>
+    <button onclick="EsconderTabla()">añios</button>
+    <div id="cuelpo">
         <div class="registro">
             <div class="datos">
                 <h2 id="inicio"></h2>
@@ -74,13 +88,22 @@
                 <input type="email" placeholder="Email" id="Email">
                 <input type="date" id="fecha" ;>
                 <div>
-                    <label>masculino<input type="radio" name="pepe" id="1" placeholder="xd"></label>
-                    <label>femenino<input type="radio" name="pepe" id="2" placeholder="xd"></label>
+                    <label>masculino<input type="radio" name="pepe" id="hombre"></label>
+                    <label>femenino<input type="radio" name="pepe" id="mujer"></label>
                 </div>
                 <button onclick="Get()">enviar</button>
             </div>
         </div>
-
+        <div class="TablaDatos">
+            <p id="name"></p>
+            <p id="secondname"></p>
+            <p id="telefono"></p>
+            <p id="docuidentidad"></p>
+            <p id="numeidentidad"></p>
+            <p id="gmail"></p>
+            <p id="Fecha"></p>
+            <p id="Genero"></p>
+        </div>
     </div>
     <div id="Alerta">
         <p id="alerta"> </p>
@@ -89,10 +112,20 @@
         const inicio = "Registro";
         let AlertaContenido = "";
         document.getElementById("inicio").innerHTML = inicio
+        const table = document.getElementById("cuelpo")
         let datos = {};
         let datos1 = [];
+        function Tabla() {
+            table.style.zIndex = 40;
+        }
+        function EsconderTabla() {
+            table.style.zIndex = 10;
+        }
         function Get() {
+           
             let llave = true;
+            const genero = document.querySelector('input[name="pepe"]:checked');
+            //console.log(genero)
             datos = {
                 Nombre: document.getElementById("nombre").value,
                 Apellido: document.getElementById("apellido").value,
@@ -100,9 +133,22 @@
                 Telefono: document.getElementById("telefono").value,
                 TipoDocumento: document.getElementById("DocIdentidad").value,
                 NumeroDocumento: document.getElementById("Doc").value,
-                Fecha: document.getElementById("fecha").value
+                Fecha: document.getElementById("fecha").value,
+                //Genero: genero
             }
-            datos1.unshift(datos)
+            function paintTable() {
+                datos1.forEach((propiedad, indice) => {
+                    console.log(propiedad)
+                    document.getElementById("name").innerHTML = (propiedad.Nombre)
+                    document.getElementById("secondname").innerHTML = (propiedad.Apellido)
+                    document.getElementById("telefono").innerHTML = (propiedad.Telefono)
+                    document.getElementById("docuidentidad").innerHTML = (propiedad.TipoDocumento)
+                    document.getElementById("nameidentidad").innerHTML = (propiedad.NumeroDocumento)
+                    document.getElementById("gmail").innerHTML = (propiedad.Email)
+                    document.getElementById("fecha").innerHTML = (propiedad.Fecha)
+                    //document.getElementById("genero").innerHTML(propiedad.Nombre) 
+                });
+            }
             function Validar(retorno) {
                 let miElemento = document.getElementById('Alerta');
                 for (let key in datos) {
@@ -111,41 +157,36 @@
                     if (elemento.length == 0) {
                         AlertaContenido = `no se permiten espacios vacios en ${key}`;
                         llave = false;
-                        document.getElementById("alerta").innerHTML = AlertaContenido
-                        miElemento.style.zIndex = 20;
-                    }
-                    if (elemento.length > 10 && key != 'Email') {
+                        document.getElementById("alerta").innerHTML = AlertaContenido;
+                        miElemento.style.zIndex = 30;
+                    } else if (elemento.length > 10 && key != 'Email') {
                         AlertaContenido = `no se permiten mas de 10 caracteres en ${key}`;
-                        document.getElementById("alerta").innerHTML = AlertaContenido
+                        document.getElementById("alerta").innerHTML = AlertaContenido;
                         llave = false;
-                        miElemento.style.zIndex = 20;
-                    }
-                    if (isNaN(nan) == false && (key == "Nombre" || key == "Apellido")) {
-                        console.log(isNaN(nan))
+                        miElemento.style.zIndex = 30;
+                    } else if (isNaN(nan) == false && (key == "Nombre" || key == "Apellido")) {
                         AlertaContenido = `no se permiten numeros en ${key}`;
-                        document.getElementById("alerta").innerHTML = AlertaContenido
+                        document.getElementById("alerta").innerHTML = AlertaContenido;
                         llave = false;
-                        miElemento.style.zIndex = 20;
+                        miElemento.style.zIndex = 30;
                     }
                 }
                 if (llave) {
                     AlertaContenido = `registro exitoso`;
                     document.getElementById("alerta").innerHTML = AlertaContenido
-                    miElemento.style.zIndex = 20;
+                    miElemento.style.zIndex = 30;
+                    datos1.unshift(datos)
                 }
-
             }
-
-
             Validar(setTimeout((() => {
-                AlertaContenido = `hola bb`;
                 let miElemento = document.getElementById('Alerta');
                 document.getElementById("alerta").innerHTML = AlertaContenido
-                miElemento.style.zIndex = 1;
-            }), 1000))
-
-
-        }    </script>
+                miElemento.style.zIndex = 10;
+                console.log(datos1)
+            }), 3000));
+            paintTable()
+        }    
+    </script>
 
 </body>
 

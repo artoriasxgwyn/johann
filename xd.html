@@ -28,34 +28,34 @@
 
         </div>
     </div>
-
+    
 </body>
 <script>
     let data = []
     function enviar() {
         let datos = {}
-        datos = {
-            nombre: document.getElementById("nombres").value,
-            apellidos: document.getElementById("apellidos").value,
-            telefono: document.getElementById("telefono").value
-        }
+        datos = {nombre:document.getElementById("nombres").value, 
+        apellidos: document.getElementById("apellidos").value, 
+        telefono: document.getElementById("telefono").value
+    }
         data.unshift(datos)
         console.log(data);
         formaPintarLista1()
     }
 
-    function formaPintarLista1() {
-        document.getElementById("listaDatos").textContent = ""
-        data.forEach((item, index) => {
+    function formaPintarLista1(){
+        document.getElementById("listaDatos").textContent=""
+        data.forEach((item, index)=>{
             const ul = document.createElement("ul")
             const li = document.createElement("li")
             const li2 = document.createElement("li")
             const boton = document.createElement("button")
             boton.textContent = "❌"
-            boton.addEventListener("click", () => {
+            boton.addEventListener("click",() =>{
+
             })
-            li.textContent = "El nombre es: " + item.nombre + " el apellido es " + item.apellidos + " y el telfono es: " + item.telefono
-            li2.textContent = item.apellidos
+            li.textContent = "El nombre es: "+item.nombre+" el apellido es "+item.apellidos+" y el telfono es: "+item.telefono
+            li2.textContent= item.apellidos
             li.appendChild(boton)
             ul.appendChild(li)
             document.getElementById("listaDatos").appendChild(ul)
@@ -63,10 +63,10 @@
     }
 
 
-    function formaPintarLista2() {
-        document.getElementById("listaDatos").textContent = ""
-        data.forEach((item, index) => {
-            document.getElementById("listaDatos").innerHTML += `
+    function formaPintarLista2(){
+        document.getElementById("listaDatos").textContent=""
+        data.forEach((item, index)=>{
+            document.getElementById("listaDatos").innerHTML+=`
                 <ul>
                     <li>${item.nombre} <button onclick='eliminar()'>❌</button></li>    
                     
@@ -75,13 +75,18 @@
         })
     }
 
+
+
+    
+
+
+
 </script>
 <style>
     table {
         border: 2px solid orange;
     }
-
-    th {
+    th{
         border: 2px solid orange;
     }
 </style>
