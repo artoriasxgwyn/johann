@@ -22,6 +22,8 @@
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
+        position: relative;
+        z-index: 20;
     }
 
     .registro {
@@ -31,6 +33,7 @@
         flex-direction: column;
         border-radius: 10px;
         align-items: center;
+        position: relative;
     }
 
     .datos {
@@ -41,15 +44,16 @@
 
     }
 
-    .Alerta {
+    #Alerta {
         background-image: url("https://i.pinimg.com/736x/a7/9d/31/a79d3185734f513323eacadd1616e41f.jpg");
         background-size: cover;
         position: absolute;
-        top: 0px;
         right: 0px;
+        top: 0px;
         width: 30vh;
         height: 30vh;
         text-align: center;
+        z-index: 10;
     }
 </style>
 
@@ -73,14 +77,13 @@
                     <label>masculino<input type="radio" name="pepe" id="1" placeholder="xd"></label>
                     <label>femenino<input type="radio" name="pepe" id="2" placeholder="xd"></label>
                 </div>
-                <button onclick="validar()">enviar</button>
+                <button onclick="Get()">enviar</button>
             </div>
-            <div class="Alerta">
-                <p id="alerta"> </p>
-            </div>
-
         </div>
 
+    </div>
+    <div id="Alerta">
+        <p id="alerta"> </p>
     </div>
     <script>
         const inicio = "Registro";
@@ -88,8 +91,7 @@
         document.getElementById("inicio").innerHTML = inicio
         let datos = {};
         let datos1 = [];
-      
-        function validar() {
+        function Get() {
             let llave = true;
             datos = {
                 Nombre: document.getElementById("nombre").value,
@@ -101,37 +103,49 @@
                 Fecha: document.getElementById("fecha").value
             }
             datos1.unshift(datos)
-            console.log(datos1)
-            for (let key in datos) {
-               
-                let elemento = datos[key];
-                let nan = parseInt(elemento);
-                if (elemento.length == 0) {
-                    AlertaContenido = `no se permiten espacios vacios en ${key}`;
-                    document.getElementById("alerta").innerHTML = AlertaContenido
-                    llave = false;
-                } 
-                if (elemento.length > 10 && key != 'Email') {
-                    AlertaContenido = `no se permiten mas de 10 caracteres en ${key}`;
-                    document.getElementById("alerta").innerHTML = AlertaContenido
-                    llave = false;
-                } 
-                 if (isNaN(nan) == false && (key == "Nombre" || key == "Apellido")) {
-                    console.log(isNaN(nan))
-                    AlertaContenido = `no se permiten numeros en ${key}`;
-                    document.getElementById("alerta").innerHTML = AlertaContenido
-                    llave = false;
+            function Validar(retorno) {
+                let miElemento = document.getElementById('Alerta');
+                for (let key in datos) {
+                    let elemento = datos[key];
+                    let nan = parseInt(elemento);
+                    if (elemento.length == 0) {
+                        AlertaContenido = `no se permiten espacios vacios en ${key}`;
+                        llave = false;
+                        document.getElementById("alerta").innerHTML = AlertaContenido
+                        miElemento.style.zIndex = 20;
+                    }
+                    if (elemento.length > 10 && key != 'Email') {
+                        AlertaContenido = `no se permiten mas de 10 caracteres en ${key}`;
+                        document.getElementById("alerta").innerHTML = AlertaContenido
+                        llave = false;
+                        miElemento.style.zIndex = 20;
+                    }
+                    if (isNaN(nan) == false && (key == "Nombre" || key == "Apellido")) {
+                        console.log(isNaN(nan))
+                        AlertaContenido = `no se permiten numeros en ${key}`;
+                        document.getElementById("alerta").innerHTML = AlertaContenido
+                        llave = false;
+                        miElemento.style.zIndex = 20;
+                    }
                 }
-            }
-            if (llave) {
+                if (llave) {
                     AlertaContenido = `registro exitoso`;
-                    console.log("ya esta hecho")
                     document.getElementById("alerta").innerHTML = AlertaContenido
+                    miElemento.style.zIndex = 20;
                 }
-           
-                
-        }
-    </script>
+
+            }
+
+
+            Validar(setTimeout((() => {
+                AlertaContenido = `hola bb`;
+                let miElemento = document.getElementById('Alerta');
+                document.getElementById("alerta").innerHTML = AlertaContenido
+                miElemento.style.zIndex = 1;
+            }), 1000))
+
+
+        }    </script>
 
 </body>
 
