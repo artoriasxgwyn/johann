@@ -80,12 +80,11 @@
     function validaciones() {
 
         for (let key in llaves.datoaValidar) {
-            llaves.orden = key
+            llaves.orden = key;
             console.log(key)
-            let camposVacios = llaves.datoaValidar[key] == "" ? `Por favor inserte  ${key}` : "no problem"
-            let telefono = isNaN(parseInt(llaves.datoaValidar.Telefono)) == true ? `Por favor inserte un numero en Telefono` : "no problem"
+            let camposVacios = llaves.datoaValidar[key] == "" ? `Por favor inserte  ${key}` : "no problem";
             if (camposVacios == "no problem") {
-                console.log(key)
+                let telefono = isNaN(parseInt(llaves.datoaValidar.Telefono)) == true ? `Por favor inserte un numero en Telefono` : "no problem";
                 if (telefono == "no problem") {
                     if (key == "Sintoma") {
                         numeroCita()
@@ -141,13 +140,42 @@
         CITAS.textContent = ""
         arrayCitas.forEach((propiedad, item) => {
             let contenido = document.createElement("p");
-            let citaCarta = document.createElement("div");
+            let citaCarta = document.createElement("article");
+            let header = document.createElement("header");
+            let section = document.createElement("section");
+            let footer = document.createElement("footer");
             let edit = document.createElement("button");
             let delet = document.createElement("button");
+            let iconDelete = document.createElement("i")
+            let iconEdite = document.createElement("i")
+
+
+            CITAS.appendChild(citaCarta);
+
+            citaCarta.appendChild(header)
+            citaCarta.appendChild(section)
+            citaCarta.appendChild(footer)
+
+            section.appendChild(contenido);
+
+            footer.appendChild(edit)
+            footer.appendChild(delet)
+            edit.appendChild(iconEdite)
+            delet.appendChild(iconDelete)
+
+
+            header.classList.add("header")
+            section.classList.add("section")
+            footer.classList.add("footer")
+            iconEdite.classList.add("fa-solid", "fa-pencil")
+            iconDelete.classList.add("fa-solid", "fa-eraser")
+
+            iconEdite.style.fontSize = "15px"
+            iconDelete.style.fontSize = "17px"
+
             //<i class="fa-solid fa-pencil"></i>
             //<i class="fa-solid fa-eraser"></i>
-            CITAS.appendChild(citaCarta);
-            citaCarta.appendChild(contenido);
+
             citaCarta.classList.add("CARDS")
             contenido.textContent = "pepep";
 
@@ -349,6 +377,25 @@
         padding: 1%;
         display: flex;
         gap: 1%;
+    }
+
+    .header {
+        height: 15%;
+        width: 100%;
+    }
+
+    .section {
+        display: flex;
+        justify-content: center;
+        height: 70%;
+        width: 100%;
+    }
+
+    .footer {
+        display: flex;
+        justify-content: end;
+        height: 15%;
+        width: 100%;
     }
 
     .CARDS {
