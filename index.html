@@ -58,6 +58,7 @@
         modalFormulario: 0,
         acumulador: -1,
         datoaValidar: {},
+        orden: ""
     };
     let arrayCitas = []
     let modalAlerta = document.getElementById("modalAlerta")
@@ -71,15 +72,15 @@
             const data = Object.fromEntries(
                 new FormData(datos.target)
             )
-            numeroCita()
-            data.numeroCita = llaves.acumulador
-            //  console.log(data)
+            console.log(data)
             llaves.datoaValidar = data
             validaciones()
 
         })
     function validaciones() {
+
         for (let key in llaves.datoaValidar) {
+            llaves.orden = key
             console.log(key)
             let camposVacios = llaves.datoaValidar[key] == "" ? `Por favor inserte  ${key}` : "no problem"
             let telefono = isNaN(parseInt(llaves.datoaValidar.Telefono)) == true ? `Por favor inserte un numero en Telefono` : "no problem"
@@ -87,6 +88,8 @@
                 console.log(key)
                 if (telefono == "no problem") {
                     if (key == "Sintoma") {
+                        numeroCita()
+                        llaves.datoaValidar.numeroCita = llaves.acumulador
                         arrayCitas.push(llaves.datoaValidar)
                         modalalertas("Cita guardada con exito")
                         insertaCards()
@@ -134,15 +137,20 @@
     }
     )
     function insertaCards() {
+        let CITAS = document.getElementById("cajaCartas")
+        CITAS.textContent = ""
         arrayCitas.forEach((propiedad, item) => {
-            let CITAS = document.getElementById("cajaCartas")
             let contenido = document.createElement("p");
             let citaCarta = document.createElement("div");
-
+            let edit = document.createElement("button");
+            let delet = document.createElement("button");
+            //<i class="fa-solid fa-pencil"></i>
+            //<i class="fa-solid fa-eraser"></i>
             CITAS.appendChild(citaCarta);
             citaCarta.appendChild(contenido);
+            citaCarta.classList.add("CARDS")
             contenido.textContent = "pepep";
-            citaCarta.style.backgroundColor = "green";
+
         })
     }
     function modalalertas(err) {
@@ -299,10 +307,16 @@
     }
 
     .cajaCartas {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        overflow: scroll;
         background-color: #34495e;
         width: 100%;
-        height: 91.3%;
+        height: 100vh;
         border-radius: 20px;
+        padding: 10px;
+
     }
 
     button {
@@ -337,11 +351,10 @@
         gap: 1%;
     }
 
-    .cajaCartas {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 10px;
-        overflow: scroll
+    .CARDS {
+        background-color: #283747;
+        height: 30vh;
+        border-radius: 10px;
     }
 
     .cajaCartas::-webkit-scrollbar {
