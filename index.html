@@ -25,6 +25,11 @@
                     <option value="Vaca">Vaca</option>
                     <option value="Caballo">Caballo</option>
                     <option value="Cuervo">Cuervo</option>
+                    <option value="Dragon">Dragon</option>
+                    <option value="Nutria">Nutria</option>
+                    <option value="Gusano">Gusano</option>
+                    <option value="Rana">Rana</option>
+                    <option value="Pez">Pez</option>
                 </select>
                 <textarea name="Sintoma" id="textarea" placeholder="  Sintomas del animal" spellcheck="true"></textarea>
                 <button id="save" name="guardar" type="submit"><i id="" class="fa-solid fa-floppy-disk"
@@ -142,6 +147,7 @@
             let delet = document.createElement("button");
             let iconDelete = document.createElement("i")
             let iconEdite = document.createElement("i")
+            let iconAnimal = document.createElement("i")
 
             CITAS.appendChild(citaCarta);
 
@@ -150,6 +156,8 @@
             citaCarta.appendChild(footer)
 
             section.appendChild(contenido);
+
+            header.appendChild(iconAnimal)
 
             footer.appendChild(edit)
             footer.appendChild(delet)
@@ -168,10 +176,33 @@
 
             iconEdite.style.fontSize = "17px"
             iconDelete.style.fontSize = "17px"
+            iconAnimal.style.fontSize = "25px"
 
             citaCarta.classList.add("CARDS")
             contenido.textContent = "pepep";
-            console.log(item)
+
+            if (propiedad.Especie_de_la_mascota == "Gato") {
+                iconAnimal.classList.add("fa-solid", "fa-cat")
+            } else if (propiedad.Especie_de_la_mascota == "Perro") {
+                iconAnimal.classList.add("fa-solid", "fa-dog")
+            } else if (propiedad.Especie_de_la_mascota == "Vaca") {
+                iconAnimal.classList.add("fa-solid", "fa-cow")
+            } else if (propiedad.Especie_de_la_mascota == "Caballo") {
+                iconAnimal.classList.add("fa-solid", "fa-horse")
+            } else if (propiedad.Especie_de_la_mascota == "Cuervo") {
+                iconAnimal.classList.add("fa-solid", "fa-crow")
+            } else if (propiedad.Especie_de_la_mascota == "Dragon") {
+                iconAnimal.classList.add("fa-solid", "fa-dragon")
+            } else if (propiedad.Especie_de_la_mascota == "Nutria") {
+                iconAnimal.classList.add("fa-solid", "fa-otter")
+            } else if (propiedad.Especie_de_la_mascota == "Gusano") {
+                iconAnimal.classList.add("fa-solid", "fa-worm")
+            } else if (propiedad.Especie_de_la_mascota == "Rana") {
+                iconAnimal.classList.add("fa-solid", "fa-frog")
+            } else if (propiedad.Especie_de_la_mascota == "Pez") {
+                iconAnimal.classList.add("fa-solid", "fa-fish-fins")
+            }
+
             edit.addEventListener("click", () => {
                 document.getElementsByName("Nombre_de_la_mascota")[0].value = propiedad.Nombre_de_la_mascota;
                 document.getElementsByName("Nombre_del_propietario")[0].value = propiedad.Nombre_del_propietario;
@@ -213,6 +244,7 @@
         arrayCitas[llaves.indice].Telefono = llaves.datoaValidar.Telefono
         arrayCitas[llaves.indice].Fecha_de_la_cita = llaves.datoaValidar.Fecha_de_la_cita
         arrayCitas[llaves.indice].Hora_de_la_cita = llaves.datoaValidar.Hora_de_la_cita
+           arrayCitas[llaves.indice].Especie_de_la_mascota = llaves.datoaValidar.Especie_de_la_mascota
         arrayCitas[llaves.indice].Sintoma = llaves.datoaValidar.Sintoma
     }
 
@@ -428,6 +460,8 @@
     }
 
     .header {
+        display: flex;
+        justify-content: center;
         height: 15%;
         width: 100%;
     }
