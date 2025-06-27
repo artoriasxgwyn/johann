@@ -58,7 +58,9 @@
         modalFormulario: 0,
         acumulador: -1,
         datoaValidar: {},
-        orden: ""
+        orden: "",
+        indice: 0,
+        guardado: true
     };
     let arrayCitas = []
     let modalAlerta = document.getElementById("modalAlerta")
@@ -66,6 +68,7 @@
     let modal = document.getElementById("citacartas")
     const elemento = document.getElementById('cajaIzquierda');
     let boton = document.getElementById("botonCita")
+
     document.querySelector("form")
         .addEventListener("submit", (datos) => {
             datos.preventDefault()
@@ -74,16 +77,19 @@
             )
             llaves.datoaValidar = data
             validaciones()
+
         })
+
+
     function validaciones() {
         for (let key in llaves.datoaValidar) {
             llaves.orden = key;
             let camposVacios = llaves.datoaValidar[key] == "" ? `Por favor inserte  ${key}` : "no problem";
             if (camposVacios == "no problem") {
                 let telefono = isNaN(parseInt(llaves.datoaValidar.Telefono)) == true ? `Por favor inserte un numero en Telefono` : "no problem";
-                if (telefono == "no problem" && key == "telefono" || key == "Sintoma") {
+                if ((telefono == "no problem" && key == "Sintoma")) {
                     guardarCita()
-                } else if (key == "telefono") {
+                } else if (telefono != "no problem" && key == "Telefono") {
                     modalalertas(telefono)
                     break
                 }
@@ -155,8 +161,8 @@
             header.classList.add("header")
             section.classList.add("section")
             footer.classList.add("footer")
-            edit.classList.add("button")
-            delet.classList.add("button")
+            edit.classList.add("btton")
+            delet.classList.add("btton")
             citaCarta.style.padding = "3%"
             iconEdite.classList.add("fa-solid", "fa-pencil")
             iconDelete.classList.add("fa-solid", "fa-eraser")
@@ -164,34 +170,45 @@
             iconEdite.style.fontSize = "17px"
             iconDelete.style.fontSize = "17px"
 
-            //<i class="fa-solid fa-pencil"></i>
-            //<i class="fa-solid fa-eraser"></i>
-
             citaCarta.classList.add("CARDS")
             contenido.textContent = "pepep";
 
             edit.addEventListener("click", () => {
-                document.getElementsByName("Nombre_de_la_mascota")[0].value = llaves.datoaValidar.Nombre_de_la_mascota
-                document.getElementsByName("Nombre_del_propietario")[0].value = llaves.datoaValidar.Nombre_del_propietario
-                document.getElementsByName("Telefono")[0].value = llaves.datoaValidar.Telefono
-                document.getElementsByName("Fecha_de_la_cita")[0].value = llaves.datoaValidar.Fecha_de_la_cita
-                document.getElementsByName("Hora_de_la_cita")[0].value = llaves.datoaValidar.Hora_de_la_cita
-                document.getElementsByName("Especie_de_la_mascota")[0].value = llaves.datoaValidar.Especie_de_la_mascota
-                document.getElementsByName("Sintoma")[0].value = llaves.datoaValidar.Sintoma
-
+                document.getElementsByName("Nombre_de_la_mascota")[0].value = propiedad.Nombre_de_la_mascota;
+                document.getElementsByName("Nombre_del_propietario")[0].value = propiedad.Nombre_del_propietario;
+                document.getElementsByName("Telefono")[0].value = propiedad.Telefono;
+                document.getElementsByName("Fecha_de_la_cita")[0].value = propiedad.Fecha_de_la_cita;
+                document.getElementsByName("Hora_de_la_cita")[0].value = propiedad.Hora_de_la_cita;
+                document.getElementsByName("Especie_de_la_mascota")[0].value = propiedad.Especie_de_la_mascota;
+                document.getElementsByName("Sintoma")[0].value = propiedad.Sintoma;
+                llaves.indice = item
+                llaves.datoaValidar = propiedad
             })
-            edit.addEventListener("click", () => {
+            delet.addEventListener("click", () => {
 
             })
         })
     }
+    function editarCita() {
+        arrayCitas[llaves.indice].Nombre_de_la_mascota = datoaValidar.Nombre_de_la_mascota
+        arrayCitas[llaves.indice].Nombre_del_propietario = datoaValidar.Nombre_del_propietario
+        arrayCitas[llaves.indice].Telefono = datoaValidar.Telefono
+        arrayCitas[llaves.indice].Fecha_de_la_cita = datoaValidar.Fecha_de_la_cita
+        arrayCitas[llaves.indice].Hora_de_la_cita = datoaValidar.Hora_de_la_cita
+        arrayCitas[llaves.indice].Sintoma = datoaValidar.Sintoma
+    }
     function guardarCita() {
-        limpiar()
-        numeroCita()
-        llaves.datoaValidar.numeroCita = llaves.acumulador
-        arrayCitas.push(llaves.datoaValidar)
-        modalalertas("Cita guardada con exito")
-        insertaCards()
+        if (llaves.guardado) {
+            limpiar()
+            numeroCita()
+            llaves.datoaValidar.numeroCita = llaves.acumulador
+            arrayCitas.push(llaves.datoaValidar)
+            modalalertas("Cita guardada con exito")
+            insertaCards()
+        } else {
+            editarCita()
+        }
+
     }
     function limpiar() {
         document.getElementsByName("Nombre_de_la_mascota")[0].value = ""
@@ -220,7 +237,6 @@
             h1.classList.add("blur-in")
             h1.textContent = "Administrador de Citas"
         }, 2500)
-
     }
 </script>
 <style>
@@ -258,6 +274,10 @@
 
     button:hover {
         background-color: #283747;
+    }
+
+    .btton:hover {
+        background-color: #34495e;
     }
 
     body::-webkit-scrollbar {
