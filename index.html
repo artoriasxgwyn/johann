@@ -77,7 +77,6 @@
             )
             llaves.datoaValidar = data
             validaciones()
-
         })
 
 
@@ -172,7 +171,7 @@
 
             citaCarta.classList.add("CARDS")
             contenido.textContent = "pepep";
-
+            console.log(item)
             edit.addEventListener("click", () => {
                 document.getElementsByName("Nombre_de_la_mascota")[0].value = propiedad.Nombre_de_la_mascota;
                 document.getElementsByName("Nombre_del_propietario")[0].value = propiedad.Nombre_del_propietario;
@@ -183,20 +182,14 @@
                 document.getElementsByName("Sintoma")[0].value = propiedad.Sintoma;
                 llaves.indice = item
                 llaves.datoaValidar = propiedad
+                llaves.guardado = false
             })
             delet.addEventListener("click", () => {
 
             })
         })
     }
-    function editarCita() {
-        arrayCitas[llaves.indice].Nombre_de_la_mascota = datoaValidar.Nombre_de_la_mascota
-        arrayCitas[llaves.indice].Nombre_del_propietario = datoaValidar.Nombre_del_propietario
-        arrayCitas[llaves.indice].Telefono = datoaValidar.Telefono
-        arrayCitas[llaves.indice].Fecha_de_la_cita = datoaValidar.Fecha_de_la_cita
-        arrayCitas[llaves.indice].Hora_de_la_cita = datoaValidar.Hora_de_la_cita
-        arrayCitas[llaves.indice].Sintoma = datoaValidar.Sintoma
-    }
+
     function guardarCita() {
         if (llaves.guardado) {
             limpiar()
@@ -207,9 +200,22 @@
             insertaCards()
         } else {
             editarCita()
+            limpiar()
+            modalalertas("Cita editada con exito")
+            insertaCards()
+            llaves.guardado = true
         }
-
     }
+
+    function editarCita() {
+        arrayCitas[llaves.indice].Nombre_de_la_mascota = llaves.datoaValidar.Nombre_de_la_mascota
+        arrayCitas[llaves.indice].Nombre_del_propietario = llaves.datoaValidar.Nombre_del_propietario
+        arrayCitas[llaves.indice].Telefono = llaves.datoaValidar.Telefono
+        arrayCitas[llaves.indice].Fecha_de_la_cita = llaves.datoaValidar.Fecha_de_la_cita
+        arrayCitas[llaves.indice].Hora_de_la_cita = llaves.datoaValidar.Hora_de_la_cita
+        arrayCitas[llaves.indice].Sintoma = llaves.datoaValidar.Sintoma
+    }
+
     function limpiar() {
         document.getElementsByName("Nombre_de_la_mascota")[0].value = ""
         document.getElementsByName("Nombre_del_propietario")[0].value = ""
