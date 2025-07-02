@@ -231,15 +231,19 @@
                 llaves.guardado = false
             })
             delet.addEventListener("click", () => {
-                llaves.indice = item
-                let indice = arrayCitas.findIndex(it => it.numeroCita == llaves.indice)
-                modalalertas("Cita eliminada")
-                citaCarta.classList.remove("scale-up-center")
-                citaCarta.classList.add("scale-down-center")
-                setTimeout(() => {
-                    arrayCitas.splice(indice, 1)
-                    insertaCards()
-                }, 400)
+                if (llaves.guardado) {
+                    llaves.indice = item
+                    let indice = arrayCitas.findIndex(it => it.numeroCita == llaves.indice)
+                    modalalertas("Cita eliminada")
+                    citaCarta.classList.remove("scale-up-center")
+                    citaCarta.classList.add("scale-down-center")
+                    llaves.guardado = true
+                    setTimeout(() => {
+                        arrayCitas.splice(indice, 1)
+                        insertaCards()
+                    }, 400)
+                }
+
             })
         })
     }
