@@ -182,6 +182,8 @@
             citaCarta.style.padding = "3%"
             iconEdite.classList.add("fa-solid", "fa-pencil")
             iconDelete.classList.add("fa-solid", "fa-eraser")
+            citaCarta.classList.remove("scale-down-center")
+            citaCarta.classList.add("scale-up-center")
 
             iconEdite.style.fontSize = "17px"
             iconDelete.style.fontSize = "17px"
@@ -229,7 +231,15 @@
                 llaves.guardado = false
             })
             delet.addEventListener("click", () => {
-
+                llaves.indice = item
+                let indice = arrayCitas.findIndex(it => it.numeroCita == llaves.indice)
+                modalalertas("Cita eliminada")
+                citaCarta.classList.remove("scale-up-center")
+                citaCarta.classList.add("scale-down-center")
+                setTimeout(() => {
+                    arrayCitas.splice(indice, 1)
+                    insertaCards()
+                }, 400)
             })
         })
     }
@@ -454,6 +464,7 @@
         border-radius: 20px;
         margin-top: 5px;
         margin-bottom: 5px;
+        padding: 3.5%;
         display: flex;
         align-items: center;
         border: solid 2px #34495e;
@@ -491,6 +502,7 @@
         width: 100%;
         background-color: #1b2631;
         border-radius: 6.7px;
+        padding-top: 5%;
     }
 
     .section {
