@@ -31,7 +31,7 @@
                     <option value="Rana">Rana</option>
                     <option value="Pez">Pez</option>
                 </select>
-                <textarea name="Sintoma" id="textarea" placeholder="  Sintomas del animal" spellcheck="true"></textarea>
+                <textarea name="Sintoma" id="textarea" placeholder="Sintomas del animal" spellcheck="true"></textarea>
                 <button id="save" name="guardar" type="submit"><i id="" class="fa-solid fa-floppy-disk"
                         style="font-size: 17px;"></i></button>
             </form>
@@ -107,8 +107,8 @@
         sum = (llaves.acumulador) + 1
         llaves.acumulador = sum
     }
-    boton.addEventListener("click", () => {
-        if (llaves.modalFormulario === 0) {
+    function formulario() {
+        if (llaves.modalFormulario == 0) {
             document.getElementById("icon").className = "fa-solid fa-minus";
             elemento.style.position = "static"
             elemento.style.display = "block";
@@ -118,7 +118,7 @@
             citaCartas.classList.add("scale-up-horizontal-left")
             elemento.classList.add("scale-up-center")
             llaves.modalFormulario = 1;
-        } else if (llaves.modalFormulario === 1) {
+        } else if (llaves.modalFormulario == 1) {
             elemento.style.position = "fixed"
             document.getElementById("icon").className = "fa-solid fa-plus";
             citaCartas.style.width = "100%";
@@ -131,6 +131,9 @@
             }, 400)
             llaves.modalFormulario = 0;
         };
+    }
+    boton.addEventListener("click", () => {
+        formulario()
     }
     )
     function insertaCards() {
@@ -229,6 +232,10 @@
                 llaves.indice = item
                 llaves.datoaValidar = propiedad
                 llaves.guardado = false
+                if (llaves.guardado != true && llaves.modalFormulario == 0) {
+                    formulario()
+                }
+
             })
             delet.addEventListener("click", () => {
                 if (llaves.guardado) {
@@ -376,6 +383,7 @@
         border: solid 2px #34495e;
         background-color: #1b2631;
         color: #ecf0f1;
+        padding: 5%;
     }
 
     .formulario select {
